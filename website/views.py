@@ -40,7 +40,12 @@ def welcome(request):
 
 @login_required
 def home(request):
-    return render(request, "home.html")
+    try:
+        hospital = Hospital.objects.get(user = request.user)
+        return render(request, "home.html")
+    except:
+        pass
+    return render(request, "donor_home.html")
 
 
 def donor_registration(request):
