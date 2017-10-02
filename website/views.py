@@ -172,6 +172,7 @@ def new_organ_require(request):
         patient_pk = request.POST.get('patient')
         type = request.POST.get('organ_type')
         blood_group = request.POST.get('blood_group')
+        priority = request.POST.get('priority')
         patient = Donor.objects.get(pk = patient_pk)
         organ_required = OrganRequired(type = type,
                                        patient = patient,
@@ -184,7 +185,7 @@ def new_organ_require(request):
 
 @login_required
 def transplant_history(request):
-    organs = Organ.objects.exclude(type='Blood').order_by('type')
+    organs = Organ.objects.exclude(type='Blood',receiver__isnull=True).order_by('type')
     organs_a = []
     total_organs_count = len(organs)
     cur_count = 0
@@ -192,6 +193,23 @@ def transplant_history(request):
         organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient})
     data = {'organs':organs}
     return render(request,"transplant_history.html",data)
+
+#notification things
+
+@login_required
+def new_notification(request):
+    if request.method == 'POST':
+        user_pk = request.POST.get('user')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        notification = Notification(to = User.objects.get(pk = user_pk),
+                                    frm = request.user,
+                                    title = title,
+                                    text = content)
+        notification.save()
+    donors = Donor.objects.filter(donor_hospital__user = request.user)
+    data = {'patients':donors}
+    return render(request,"new_notification.html",data)
 
 def donor_registration(request):
     if(request.method=='POST'):

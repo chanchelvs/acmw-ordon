@@ -27,6 +27,9 @@ urlpatterns =[
     url(r'^new_organ_require/$', views.new_organ_require, name='new_organ_require'),
     url(r'^transplant_history/$', views.transplant_history, name='transplant_history'),
 
+    # notification stuff
+    url(r'^new_notification/$', views.new_notification, name='new_notification'),
+
 
     # admin and login urls
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
