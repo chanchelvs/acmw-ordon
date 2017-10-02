@@ -1,0 +1,58 @@
+{%  extends 'hospital_base.html' %}
+{% block content %}
+<table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Blood group</th>
+        <th>Number of units available</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for blood in bloods %}
+      <tr>
+        <td>{{ blood.blood_group }}</td>
+        <td>{{ blood.count }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    <form class="form-horizontal" method="POST">
+        {% csrf_token %}
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="blood_group"> Blood Group: </label>
+              <div class="col-xs-3">
+                  <select id="blood_group" name="blood_group" class="form-control input-md">
+                        <option value='A+ve'>A+ve</option>
+                        <option value='A-ve'>A-ve</option>
+                        <option value='B+ve'>B+ve</option>
+                        <option value='B-ve'>B-ve</option>
+                        <option value='O+ve'>O+ve</option>
+                        <option value='O-ve'>O-ve</option>
+                        <option value='AB+ve'>AB+ve</option>
+                        <option value='AB-ve'>AB-ve</option>
+                  </select>
+              </div>
+                <div class="col-xs-4"></div>
+            </div>
+        <br>
+               <div class="form-group">
+              <div class="col-xs-5" ></div>
+              <div class="col-xs-3">
+                  <input class="form-control input-md" type="number" name="quantity" placeholder="Units">
+              </div>
+                   <div class="col-xs-4"></div>
+            </div>
+        <br>
+     <div class="form-group">
+              <div class="col-xs-4" ></div>
+               <label class="col-xs-1 control-label" for="blood_group">  </label>
+              <div class="col-xs-3">
+                  <button class="btn btn-success">Add Blood units</button>
+              </div>
+            </div>
+
+
+    </form>
+{% endblock %}

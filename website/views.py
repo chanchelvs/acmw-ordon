@@ -125,8 +125,30 @@ def delete_donor(request):
 
 
 def blood_details(request):
-    data = {}
+    if request.method == 'POST':
+        group = request.POST.get('blood_group')
+        quantity = request.POST.get('quantity')
+        for i in range(int(quantity)):
+            blood = Organ(type='Blood', blood_group = group)
+            blood.save()
+    bloods = Organ.objects.filter(type='Blood').order_by('blood_group')
+    bloods_a = []
+    total_organs_count = len(bloods)
+    cur_count = 0
+    for i in range(total_organs_count):
+        if (i == total_organs_count - 1 or bloods[i].blood_group != bloods[i + 1].blood_group):
+            cur_count += 1
+            bloods_a.append({"blood_group":bloods[i].blood_group, "count":cur_count})
+            cur_count = 0
+        else:
+            cur_count += 1
+    data = {'bloods':bloods_a}
+    print data
     return render(request,"blood_details.html",data)
+
+def organ_required(request):
+    data = {}
+    return  render(request,"organ_required.html",data)
 
 def donor_registration(request):
     if(request.method=='POST'):

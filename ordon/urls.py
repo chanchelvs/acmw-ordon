@@ -23,6 +23,7 @@ urlpatterns =[
 
     #organ urls
     url(r'^blood_details/$', views.blood_details, name='blood_details'),
+    url(r'^organ_required/$', views.organ_required, name='organ_required'),
 
 
     # admin and login urls
