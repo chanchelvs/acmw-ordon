@@ -9,7 +9,7 @@ def get_choices(options):
     return zip([slugify(x) for x in options], options)
 
 blood_group_choices = get_choices(['A+ve', 'A-ve', 'B+ve', 'B-ve', 'O+ve', 'O-ve', 'AB+ve', 'AB-ve'])
-organ_choices = get_choices(['Heart', 'Lungs', 'Kidney', 'Liver', 'Blood'])
+organ_choices = get_choices(['Heart', 'Lungs', 'Kidney', 'Liver', 'Eyes', 'Blood'])
 # create your models here.
 
 class Location(models.Model):

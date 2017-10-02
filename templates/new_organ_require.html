@@ -11,7 +11,7 @@
               <div class="col-xs-3">
                   <select id="patient" name="patient" class="form-control input-md">
                       {% for patient in patients %}
-                          <option value="patient.pk">patient.user.username</option>
+                          <option value="{{ patient.pk }}">{{ patient.user.username }}</option>
                       {% endfor %}
 
 
@@ -24,12 +24,11 @@
                <label class="col-xs-2 control-label" for="organ_type"> Organ: </label>
               <div class="col-xs-3">
                   <select id="organ_type" name="organ_type" class="form-control input-md">
-                      <option value="Heart">Heart</option>
-                      <option value="Lungs">Lungs</option>
-                      <option value="Kidney">Kidney</option>
-                      <option value="Liver">Liver</option>
-
-
+                      {% for organ in organs %}
+                          {% if organ.0 != 'blood' %}
+                          <option value="{{ organ.0 | title}}">{{ organ.0 | title }}</option>
+                          {% endif %}
+                      {% endfor %}
                   </select>
               </div>
             </div>

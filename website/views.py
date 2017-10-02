@@ -156,7 +156,7 @@ def blood_details(request):
 
 @login_required
 def organ_required(request):
-    organs = Organ.objects.exclude(type='Blood').order_by('type')
+    organs = OrganRequired.objects.exclude(type='Blood').order_by('type')
     organs_a = []
     total_organs_count = len(organs)
     cur_count = 0
@@ -168,8 +168,19 @@ def organ_required(request):
 
 @login_required
 def new_organ_require(request):
-    data = {}
-    return  render(request,"organ_required.html",data)
+    if request.method == 'POST':
+        patient_pk = request.POST.get('patient')
+        type = request.POST.get('organ_type')
+        blood_group = request.POST.get('blood_group')
+        patient = Donor.objects.get(pk = patient_pk)
+        organ_required = OrganRequired(type = type,
+                                       patient = patient,
+                                       blood_group = blood_group,
+                                       organ_hospital = patient.donor_hospital)
+        organ_required.save()
+        return redirect('/organ_required/')
+    data = {'patients':Donor.objects.filter(is_patient=True,donor_hospital__user=request.user),'organs':organ_choices}
+    return  render(request,"new_organ_require.html",data)
 
 def donor_registration(request):
     if(request.method=='POST'):

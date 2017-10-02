@@ -5,7 +5,8 @@
       <tr>
         <th>Needed Organ</th>
         <th>Blood group</th>
-        <th>Patient username</th>
+        <th>Patient Name</th>
+          <th>Patient Username</th>
       </tr>
     </thead>
     <tbody>
@@ -13,7 +14,8 @@
       <tr>
         <td>{{ organ.type }}</td>
         <td>{{ organ.blood_group }}</td>
-        <td>{{ organ.patient }}</td>
+        <td>{{ organ.patient.name }} </td>
+          <td>{{ organ.patient.user.username  }}</td>
       </tr>
     {% endfor %}
     </tbody>
