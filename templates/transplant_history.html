@@ -2,15 +2,15 @@
 {% block content %}
 
     <br>
-    <div align="center"> <h3 style="margin: 10px;"> Organs Required</h3></div>
+    <div align="center"> <h3 style="margin: 10px;"> Transplant History</h3></div>
     <br>
 <table class="table table-hover table-striped">
     <thead>
       <tr>
-        <th>Needed Organ</th>
+        <th>Organ</th>
         <th>Blood group</th>
-        <th>Patient Name</th>
-          <th>Patient Username</th>
+        <th>Donor Name</th>
+          <th>Patient Name</th>
       </tr>
     </thead>
     <tbody>
@@ -18,11 +18,11 @@
       <tr>
         <td>{{ organ.type }}</td>
         <td>{{ organ.blood_group }}</td>
-        <td>{{ organ.patient.name }} </td>
-          <td>{{ organ.patient.user.username  }}</td>
+        <td>{{ organ.to.name }} </td>
+          <td>{{ organ.frm.name  }}</td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
-    
+
 {% endblock %}

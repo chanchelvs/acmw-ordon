@@ -25,6 +25,7 @@ urlpatterns =[
     url(r'^blood_details/$', views.blood_details, name='blood_details'),
     url(r'^organ_required/$', views.organ_required, name='organ_required'),
     url(r'^new_organ_require/$', views.new_organ_require, name='new_organ_require'),
+    url(r'^transplant_history/$', views.transplant_history, name='transplant_history'),
 
 
     # admin and login urls

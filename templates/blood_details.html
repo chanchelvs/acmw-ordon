@@ -1,5 +1,8 @@
 {%  extends 'hospital_base.html' %}
 {% block content %}
+    <br>
+    <div align="center"> <h3 style="margin: 10px;"> Blood Units Available</h3></div>
+    <br>
 <table class="table table-hover table-striped">
     <thead>
       <tr>
@@ -16,6 +19,11 @@
     {% endfor %}
     </tbody>
   </table>
+
+    <br>
+    <br>
+    <div align="center"> <h3 style="margin: 10px;"> Add new available blood groups</h3></div>
+    <br>
     <form class="form-horizontal" method="POST">
         {% csrf_token %}
 
