@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+    <style>
+
+    #footer button{
+        margin:4px;
+    }
+       #map {
+        height: 700px;
+        width: 100%;
+       }
+            /* Sticky footer styles
+        -------------------------------------------------- */
+
+        html,
+        body {
+          height: 100%;
+          /* The html and body elements cannot have any padding or margin. */
+        }
+
+        /* Wrapper for page content to push down footer */
+        #wrap {
+          min-height: 100%;
+          height: auto;
+          /* Negative indent footer by its height */
+          margin: 0 auto -60px;
+          /* Pad bottom by footer height */
+          padding: 0 0 60px;
+        }
+
+        /* Set the fixed height of the footer here */
+        #footer {
+          height: 60px;
+          background-color: #f5f5f5;
+        }
+
+
+        /* Custom page CSS
+        -------------------------------------------------- */
+        /* Not required for template or sticky footer method. */
+
+        .container {
+          width: auto;
+          max-width: 680px;
+          padding: 0 15px;
+        }
+        .container .credit {
+          margin: 0 0;
+          padding: 8px 0 4px 0;
+        }
+
+        .caret-up {
+            /* Safari */
+            -webkit-transform: rotate(-180deg);
+
+            /* Firefox */
+            -moz-transform: rotate(-180deg);
+
+            /* IE */
+            -ms-transform: rotate(-180deg);
+
+            /* Opera */
+            -o-transform: rotate(-180deg);
+
+            /* Internet Explorer */
+            filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
+
+        }
+
+        .drop-up {
+            top: auto;
+            bottom: 100% !important;
+        }
+
+    </style>
+
+    <nav class="navbar navbar-default" style="background:#023e58;border-radius:0;margin-bottom: 0">
+        <div align="center">
+            <span style="color:white;font-family:cursive;font-size: 350%;">OrDon</span>
+            <span style="color:white;font-family:cursive;font-size: 100%;">Save Life With Your Life</span>
+            <div style="float: right;margin: 10px;">
+                <a href="/login/" class="btn btn-success btn-xs">Login</a>
+                <a href="/register/" class="btn btn-primary btn-xs">Register</a>
+            </div>
+        </div>
+    </nav>
+    <div style="background:#023e58" id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC_udSdwaN-__n1srQSJUIyfEJJVixYa0A&callback=initMap">
+    </script>
+     <script src="{% static 'js/gmaps.js' %}"></script>
+    <script>
+
+    var mapStyle = [{"elementType":"geometry","stylers":[{"color":"#1d2c4d"}]},{"elementType":"labels.text.fill","stylers":[{"color":"#8ec3b9"}]},{"elementType":"labels.text.stroke","stylers":[{"color":"#1a3646"}]},{"featureType":"administrative.country","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"administrative.land_parcel","elementType":"labels.text.fill","stylers":[{"color":"#64779e"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"color":"#4b6878"}]},{"featureType":"landscape.man_made","elementType":"geometry.stroke","stylers":[{"color":"#334e87"}]},{"featureType":"landscape.natural","elementType":"geometry","stylers":[{"color":"#023e58"}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#283d6a"}]},{"featureType":"poi","elementType":"labels.text.fill","stylers":[{"color":"#6f9ba5"}]},{"featureType":"poi","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"poi.medical","stylers":[{"color":"#22e400"},{"visibility":"on"},{"weight":8}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#023e58"}]},{"featureType":"poi.park","elementType":"labels.text.fill","stylers":[{"color":"#3C7680"}]},{"featureType":"road","elementType":"geometry","stylers":[{"color":"#304a7d"}]},{"featureType":"road","elementType":"labels.text.fill","stylers":[{"color":"#98a5be"}]},{"featureType":"road","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#2c6675"}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#255763"}]},{"featureType":"road.highway","elementType":"labels.text.fill","stylers":[{"color":"#b0d5ce"}]},{"featureType":"road.highway","elementType":"labels.text.stroke","stylers":[{"color":"#023e58"}]},{"featureType":"transit","elementType":"labels.text.fill","stylers":[{"color":"#98a5be"}]},{"featureType":"transit","elementType":"labels.text.stroke","stylers":[{"color":"#1d2c4d"}]},{"featureType":"transit.line","elementType":"geometry.fill","stylers":[{"color":"#283d6a"}]},{"featureType":"transit.station","elementType":"geometry","stylers":[{"color":"#3a4762"}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#0e1626"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"color":"#4e6d70"}]}];
+
+    var map = new GMaps({
+        el: '#map',
+        lat: 30.497982,
+        lng: 76.644552,
+        zoom: 13,
+    });;
+    map.addStyle({
+            styledMapName:"Styled Map",
+            styles: mapStyle,
+            mapTypeId: "map_style"
+        });
+    map.setStyle("map_style");
+
+    hospitals = {{ hospitals | safe}};
+    required = {{ requirements | safe }};
+    for(var i = 0; i < hospitals.length; i++){
+        map.addMarker({
+            lat: hospitals[i].latitude,
+            lng: hospitals[i].longitude,
+            title: hospitals[i].name,
+            icon:'/static/image/ic_hospital.png',
+            infoWindow:{content:'<div align="center">' + hospitals[i].name + '<br>' + 'Organs required :<br>' + required [i]+ '</div>'}
+        });
+    }
+
+
+{#      function initMap() {#}
+{#        var uluru = {lat: 30.516061, lng: 76.660890};#}
+{#        var map = new google.maps.Map(document.getElementById('map'), {#}
+{#          zoom: 12,#}
+{#          center: uluru,#}
+{#            styles: mapStyle,#}
+{#        });#}
+{#        var marker = new google.maps.Marker({#}
+{#          position: uluru,#}
+{#          map: map#}
+{#        });#}
+{#      }#}
+    </script>
+
+    <div id="footer" style="position: fixed;bottom: 0;height:initial;width: 100%;background:#023e58;" align="center">
+      <div class="container">
+          <div class="row" style="padding: 10px">
+              <a class="btn btn-warning">Organ Count</a>
+              <a href="/new_campaign/" class="btn btn-success ">Raise Fund</a>
+              <a href="/discussion/" class="btn btn-primary">Discussion Forum</a>
+              <a href="/firstaid/" class="btn btn-info">First Aid</a>
+              <a href="/faq/" class="btn btn-default">F.A.Q</a>
+
+          </div>
+      </div>
+    </div>
+
+{%  endblock %}

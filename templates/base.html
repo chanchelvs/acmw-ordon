@@ -1,0 +1,38 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Ordon</title>
+                <!-- Core CSS - Include with every page -->
+
+            <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+
+          <link rel="stylesheet" href="{% static 'css/AdminLTE.min.css' %}">
+        <style>
+
+            #title_div{
+                position: fixed;
+                    z-index: 600;
+                    text-shadow: 2px 3px 6px black;
+            }
+        </style>
+          <!-- AdminLTE Skins. Choose a skin from the css/skins
+               folder instead of downloading all of them to reduce the load. -->
+
+            <script src = "{% static 'js/jquery.min.js' %}"></script>
+            <script src = "{% static 'js/bootstrap.min.js' %}"></script>
+                </head>
+                <body>
+                {% block content %}
+                {% endblock %}
+
+
+                {% block javascript %}
+                {% endblock %}
+
+                </body>
+</html>
