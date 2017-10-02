@@ -46,6 +46,7 @@ class Donor(models.Model):
     is_alive = models.BooleanField(default = True)
     aadhar_no = models.IntegerField()
     phone_no = models.CharField(max_length = 20)
+    photo = models.CharField(max_length = 200)
     def __str__(self):
         return str(self.name) + ", " + str(self.user.username)
 
