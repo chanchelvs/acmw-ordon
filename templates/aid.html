@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<form class="form-horizontal" method="POST" >
+  {% csrf_token %}
+<fieldset>
+
+<!-- Form Name -->
+<div align="center" ><legend>First Aid</legend></div>
+{% if message %}
+<div align="center" style="padding-left:30%;padding-right:30%" ><div  class="alert alert-danger" align="center">{{message}}</div></div>
+{% endif %}
+
+<!-- Button-->
+<div class="form-group">
+  <div class="col-md-3"></div>
+
+  <div class="col-md-3">
+  <button id="wound" name="wound" class="btn btn-primary">WOUND</button>
+  </div>
+</div>
+
+<!-- Button-->
+<div class="form-group">
+  <div class="col-md-3"></div>
+
+  <div class="col-md-3">
+  <button id="fever" name="submit" class="btn btn-primary">FEVER</button>
+  </div>
+</div>
+
+<!-- Button-->
+<div class="form-group">
+  <div class="col-md-3"></div>
+
+  <button id="headache" name="submit" class="btn btn-primary">HEADACHE</button>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+
+  <div class="col-md-4">
+    <button id="heartattack" name="submit" class="btn btn-primary">HEART ATTACK</button>
+  </div>
+</div>
+
+</fieldset>
+</form>
+{% endblock %}
+

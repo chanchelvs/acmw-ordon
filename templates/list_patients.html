@@ -1,0 +1,41 @@
+{% extends 'hospital_base.html' %}
+{% block content %}
+<!--<h3>TEACHER/SUBJECTS</h3>-->
+
+<div class="container">
+  <h2>Patients Registered</h2>
+  <table class="table table-hover table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Patient Name</th>
+        <th>Aadhar Number</th>
+        <th>Blood Group</th>
+        <th>Date of Birth</th>
+        <th> </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+        <tr>
+              <td>{{patient.name}}</td>
+              <td>{{patient.aadhar_no}}</td>
+              <td>{{patient.blood_group}}</td>
+              <td>{{patient.dob}}</td>
+{#          <td><a class="btn btn-xs btn-warning" href="/edit_patient?id={{subject.pk}}">Edit</a></td>#}
+          <td><a class="btn btn-xs btn-danger" href="/delete_patient?id={{patient.pk}}">Delete</a></td>
+        </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div style="margin-left:5%">
+  <a class="btn btn-info" href="/new_patient">New Registration</a>
+</div>
+
+{% endblock %}
+
+<!--{% block myblock %}
+
+
+{% endblock %}-->

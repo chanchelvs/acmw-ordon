@@ -61,6 +61,15 @@ class Organ(models.Model):
     def __str__(self):
         return str(self.type) + ", " + str(self.blood_group) + ", " +  str(self.donor.user.username)
 
+
+class OrganRequired(models.Model):
+    type = models.CharField(max_length = 100, choices = organ_choices)
+    patient = models.ForeignKey(Donor, null =  True, blank = True, related_name='organ_patient')
+    blood_group = models.CharField(max_length = 20, choices = blood_group_choices)
+    organ_hospital = models.ForeignKey(Hospital, null = True, blank = True)
+    def __str__(self):
+        return str(self.type) + ", " + str(self.blood_group) + ", " +  str(self.donor.user.username)
+
 class Campaign(models.Model):
     posted_by = models.ForeignKey(Donor)
     target_fund = models.IntegerField(default = 0)

@@ -10,7 +10,7 @@ def faq(request):
     return render_to_response("faq.html")
 
 def firstaid(request):
-    return render_to_response("firstaid.html")
+    return render_to_response("aid.html")
 
 def welcome(request):
     hospitals_from_db =  Hospital.objects.all()
@@ -48,6 +48,7 @@ def home(request):
     return render(request, "donor_home.html")
 
 #hospital views
+@login_required
 def new_patient(request):
     if(request.method=='POST'):
         username = (request.POST.get('username'))
@@ -83,6 +84,44 @@ def new_patient(request):
             return render(request,'new_patient.html',{'message':'Passwords does not match'})
     else:
         return render(request,'new_patient.html')
+
+
+@login_required
+def list_patients(request):
+    hospital = Hospital.objects.get(user=request.user)
+    patients = Donor.objects.filter(is_patient=True, donor_hospital =hospital)
+    data = {'patients':patients}
+    #print(data)
+    return render(request,"list_patients.html",data)
+
+
+@login_required
+def list_donors(request):
+    hospital = Hospital.objects.get(user=request.user)
+    donors = Donor.objects.filter(is_patient=False, donor_hospital =hospital)
+    data = {'donors':donors}
+    #print(data)
+    return render(request,"list_donors.html",data)
+
+@login_required(login_url='/login/')
+def delete_patient(request):
+    patient_pk = request.GET.get('id')
+    try:
+        patient = Donor.objects.get(pk=patient_pk)
+        patient.delete()
+        return redirect("/list_patients/")
+    except:
+        return redirect("/list_patients/")
+
+@login_required(login_url='/login/')
+def delete_donor(request):
+    donor_pk = request.GET.get('id')
+    try:
+        donor = Donor.objects.get(pk=donor_pk)
+        donor.delete()
+        return redirect("/list_donors/")
+    except:
+        return redirect("/list_donors/")
 
 
 def donor_registration(request):

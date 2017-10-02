@@ -13,9 +13,13 @@ urlpatterns =[
     url(r'^firstaid/$', views.firstaid, name='firstaid'),
     #hospital urls
     url(r'^new_patient/$', views.new_patient, name='new_patient'),
+    url(r'^list_patients/$', views.list_patients, name='list_patients'),
+    url(r'^delete_patient/$', views.delete_patient, name='delete_patient'),
 
     # donor urls
-    url(r'^donor_registration/$', views.donor_registration, name='donor_registration'),
+    url(r'^new_donor/$', views.donor_registration, name='new_donor'),
+    url(r'^list_donors/$', views.list_donors, name='list_donors'),
+    url(r'^delete_donor/$', views.delete_donor, name='delete_donor'),
 
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
