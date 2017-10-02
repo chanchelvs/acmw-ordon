@@ -1,1 +1,63 @@
-TODO organ required
+ {%  extends 'hospital_base.html' %}
+{% block content %}
+    <br>
+
+ <form class="form-horizontal" method="POST">
+        {% csrf_token %}
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="patient"> Patient: </label>
+              <div class="col-xs-3">
+                  <select id="patient" name="patient" class="form-control input-md">
+                      {% for patient in patients %}
+                          <option value="patient.pk">patient.user.username</option>
+                      {% endfor %}
+
+
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="organ_type"> Organ: </label>
+              <div class="col-xs-3">
+                  <select id="organ_type" name="organ_type" class="form-control input-md">
+                      <option value="Heart">Heart</option>
+                      <option value="Lungs">Lungs</option>
+                      <option value="Kidney">Kidney</option>
+                      <option value="Liver">Liver</option>
+
+
+                  </select>
+              </div>
+            </div>
+             <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="blood_group"> Blood Group: </label>
+              <div class="col-xs-3">
+                  <select id="blood_group" name="blood_group" class="form-control input-md">
+                        <option value='A+ve'>A+ve</option>
+                        <option value='A-ve'>A-ve</option>
+                        <option value='B+ve'>B+ve</option>
+                        <option value='B-ve'>B-ve</option>
+                        <option value='O+ve'>O+ve</option>
+                        <option value='O-ve'>O-ve</option>
+                        <option value='AB+ve'>AB+ve</option>
+                        <option value='AB-ve'>AB-ve</option>
+                  </select>
+              </div>
+                <div class="col-xs-4"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-xs-4" ></div>
+               <label class="col-xs-1 control-label" for="blood_group">  </label>
+              <div class="col-xs-3">
+                  <button class="btn btn-success">Add Requirement</button>
+              </div>
+            </div>
+
+
+    </form>
+ {% endblock %}

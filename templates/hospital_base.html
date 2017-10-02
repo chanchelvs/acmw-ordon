@@ -118,7 +118,7 @@
         </div>
       </div> -->
       <!-- search form -->
-      <form action="/patient_list/" method="get" class="sidebar-form">
+      <form action="/list_patients/" method="get" class="sidebar-form">
         <div class="input-group">
           <input type="text" name="q" class="form-control" placeholder="Search Patient..">
               <span class="input-group-btn">
@@ -173,7 +173,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="/blood_details/"><i class="fa fa-plus"></i> Blood Units Available</a></li>
+              <li class="active"><a href="/new_organ_require/"><i class="fa fa-plus"></i> Require New Organ</a></li>
+            <li><a href="/blood_details/"><i class="fa fa-list"></i> Blood Units Available</a></li>
             <li class="active"><a href="/organ_required/"><i class="fa fa-minus"></i> Organ Requirements</a></li>
             <li class="active"><a href="/transplant_history/"><i class="fa fa-list"></i> Transplant History</a></li>
           </ul>

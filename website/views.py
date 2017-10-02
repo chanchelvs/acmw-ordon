@@ -77,9 +77,10 @@ def new_patient(request):
                           dob = dob,
                           aadhar_no = aadhar_no,
                           donor_hospital = hospital,
+                          is_patient=True,
                           photo=username+'_.jpg')
             donor.save()
-            return redirect('/home/')
+            return redirect('/list_patients/')
         else:
             return render(request,'new_patient.html',{'message':'Passwords does not match'})
     else:
@@ -89,7 +90,14 @@ def new_patient(request):
 @login_required
 def list_patients(request):
     hospital = Hospital.objects.get(user=request.user)
-    patients = Donor.objects.filter(is_patient=True, donor_hospital =hospital)
+    patients = []
+    if 'search' in request.GET:
+        query = request.GET.get('q')
+        query = query.split(' ')[0].lower()
+        patients = Donor.objects.filter(is_patient=True, donor_hospital=hospital,name__contains=query)
+    else:
+        patients = Donor.objects.filter(is_patient=True, donor_hospital=hospital)
+
     data = {'patients':patients}
     #print(data)
     return render(request,"list_patients.html",data)
@@ -123,7 +131,7 @@ def delete_donor(request):
     except:
         return redirect("/list_donors/")
 
-
+@login_required
 def blood_details(request):
     if request.method == 'POST':
         group = request.POST.get('blood_group')
@@ -146,7 +154,20 @@ def blood_details(request):
     print data
     return render(request,"blood_details.html",data)
 
+@login_required
 def organ_required(request):
+    organs = Organ.objects.exclude(type='Blood').order_by('type')
+    organs_a = []
+    total_organs_count = len(organs)
+    cur_count = 0
+    for i in range(total_organs_count):
+        organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient})
+    data = {'organs':organs_a}
+    print data
+    return render(request,"organ_details.html",data)
+
+@login_required
+def new_organ_require(request):
     data = {}
     return  render(request,"organ_required.html",data)
 

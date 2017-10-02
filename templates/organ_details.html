@@ -1,0 +1,22 @@
+{%  extends 'hospital_base.html' %}
+{% block content %}
+<table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Needed Organ</th>
+        <th>Blood group</th>
+        <th>Patient username</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for organ in organs %}
+      <tr>
+        <td>{{ organ.type }}</td>
+        <td>{{ organ.blood_group }}</td>
+        <td>{{ organ.patient }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    
+{% endblock %}
