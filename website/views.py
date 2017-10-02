@@ -204,7 +204,7 @@ def new_notification(request):
         content = request.POST.get('content')
         notification = Notification(to = User.objects.get(pk = user_pk),
                                     frm = request.user,
-                                    title = title,
+                                    name = title,
                                     text = content)
         notification.save()
     donors = Donor.objects.filter(donor_hospital__user = request.user)

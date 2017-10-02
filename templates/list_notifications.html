@@ -1,0 +1,32 @@
+{%  extends 'hospital_base.html' %}
+{% block content %}
+
+    <br>
+    <div align="center"> <h3 style="margin: 10px;"> Notifications</h3></div>
+    <br>
+<table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Sl. No.</th>
+        <th>Title</th>
+        <th>Content</th>
+          <th>Notification From</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for notification in notifications %}
+      <tr>
+        <td>{{ notification.number }}</td>
+        <td>{{ notification.name }}</td>
+        <td>{{ notification.text }} </td>
+          <td>{{ notification.frm }}</td>
+      {% if notification.is_read  %}
+          <td>K</td>
+      {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
