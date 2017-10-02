@@ -11,6 +11,8 @@ urlpatterns =[
     url(r'^home/$', views.home, name='home'),
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^firstaid/$', views.firstaid, name='firstaid'),
+    #hospital urls
+    url(r'^new_patient/$', views.new_patient, name='new_patient'),
 
     # donor urls
     url(r'^donor_registration/$', views.donor_registration, name='donor_registration'),

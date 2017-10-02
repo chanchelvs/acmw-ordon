@@ -47,6 +47,43 @@ def home(request):
         pass
     return render(request, "donor_home.html")
 
+#hospital views
+def new_patient(request):
+    if(request.method=='POST'):
+        username = (request.POST.get('username'))
+        password1 = (request.POST.get('password1'))
+        password2 = (request.POST.get('password2'))
+        name = (request.POST.get('name'))
+        email = (request.POST.get('email'))
+        phone = (request.POST.get('phone'))
+        blood_group = (request.POST.get('blood_group'))
+        aadhar_no = (request.POST.get('aadhar_no'))
+        dob = (request.POST.get('dob'))
+        photo = (request.FILES['photo'])
+        if(password1==password2):
+            try:
+                user = User.objects.get(username=username)
+                return render(request,'new_patient.html',{'message':'Select a different username'})
+            except:
+                user = User.objects.create_user(username, email, password1)
+            user = User.objects.get(username=username)
+            handle_uploaded_file(photo,username+'_.jpg')
+            hospital = Hospital.objects.get(user=request.user)
+            donor = Donor(user = user,
+                          name=name,
+                          phone_no=phone,
+                          blood_group=blood_group,
+                          dob = dob,
+                          aadhar_no = aadhar_no,
+                          donor_hospital = hospital,
+                          photo=username+'_.jpg')
+            donor.save()
+            return redirect('/home/')
+        else:
+            return render(request,'new_patient.html',{'message':'Passwords does not match'})
+    else:
+        return render(request,'new_patient.html')
+
 
 def donor_registration(request):
     if(request.method=='POST'):
