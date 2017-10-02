@@ -36,3 +36,8 @@ def welcome(request):
     requirements_json = json.dumps(requirements)
     data = {'hospitals': hospitals_json,'requirements': requirements_json}
     return render(request, "welcome.html", data)
+
+@login_required
+def home(request):
+    return render_to_response("home.html")
+
