@@ -20,7 +20,7 @@ def welcome(request):
         hospitals.append({"name": hospital.name,
                           "latitude": hospital.location.latitude,
                           "longitude": hospital.location.longitude})
-        organs_in_hospital = Organ.objects.filter(organ_hospital = hospital).order_by('type')
+        organs_in_hospital = OrganRequired.objects.filter(organ_hospital = hospital).order_by('type')
         requirement = ""
         total_organs_count = len(organs_in_hospital)
         cur_count = 0
@@ -123,6 +123,10 @@ def delete_donor(request):
     except:
         return redirect("/list_donors/")
 
+
+def blood_details(request):
+    data = {}
+    return render(request,"blood_details.html",data)
 
 def donor_registration(request):
     if(request.method=='POST'):

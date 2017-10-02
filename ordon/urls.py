@@ -21,6 +21,11 @@ urlpatterns =[
     url(r'^list_donors/$', views.list_donors, name='list_donors'),
     url(r'^delete_donor/$', views.delete_donor, name='delete_donor'),
 
+    #organ urls
+    url(r'^blood_details/$', views.blood_details, name='blood_details'),
+
+
+    # admin and login urls
     url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, name='logout'),
     url(r'^admin/', include(admin.site.urls)),
