@@ -82,7 +82,7 @@ class Campaign(models.Model):
 
 
 class Notification(models.Model):
-    title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     text = models.CharField(max_length = 500)
     type = models.CharField(max_length = 200)
     to = models.ForeignKey(User, null = True, related_name='to_user')
