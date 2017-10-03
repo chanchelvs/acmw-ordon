@@ -42,10 +42,16 @@ def welcome(request):
 def home(request):
     try:
         hospital = Hospital.objects.get(user = request.user)
-        return render(request, "home.html")
+        notifications = Notification.objects.filter(is_read=False, to = request.user)
+        return render(request, "home.html",{'notifs':notifications,'notifcount':len(notifications)})
     except:
         pass
-    return render(request, "donor_home.html")
+    notifications = Notification.objects.filter( to=request.user)
+    tempnotif = notifications.values()
+    for i in notifications:
+        i.is_read =True
+        i.save()
+    return render(request, "donor_home.html",{'notifs':notifications,'notifcount':len(notifications)})
 
 #hospital views
 @login_required
@@ -161,7 +167,7 @@ def organ_required(request):
     total_organs_count = len(organs)
     cur_count = 0
     for i in range(total_organs_count):
-        organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient})
+        organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient.user.username})
     data = {'organs':organs_a}
     print data
     return render(request,"organ_details.html",data)
@@ -189,8 +195,8 @@ def transplant_history(request):
     organs_a = []
     total_organs_count = len(organs)
     cur_count = 0
-    for i in range(total_organs_count):
-        organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient})
+    # for i in range(total_organs_count):
+    #     organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"donor":organs[i].donor.name,"receiver":organs[i].receiver.name})
     data = {'organs':organs}
     return render(request,"transplant_history.html",data)
 
@@ -239,11 +245,13 @@ def report_death(request):
                                blood_group=patient.blood_group,
                                organ_hospital=patient.donor_hospital)
                 organ.save()
+        give_notification(request)
 
-    donors = Donor.objects.filter(donor_hospital__user=request.user,is_alive=True)
+    donors = Donor.objects.filter(donor_hospital__user=request.user)
     data = {'patients': donors}
     return render(request,"report_death.html",data)
 
+@login_required
 def donor_registration(request):
     if(request.method=='POST'):
         username = (request.POST.get('username'))
@@ -272,7 +280,7 @@ def donor_registration(request):
                           aadhar_no = aadhar_no,
                           photo=username+'_.jpg')
             donor.save()
-            return redirect('/login/')
+            return redirect('/list_donors/')
         else:
             return render(request,'donor_reg.html',{'message':'Passwords does not match'}) 
     else:
@@ -282,4 +290,25 @@ def donor_registration(request):
 def give_notification(request):
     organs_available = Organ.objects.exclude(type='Blood').order_by('type')
     organs_required = OrganRequired.objects.exclude(type='Blood').order_by('type')
+    for organ_required in organs_required:
+        for organ_available in organs_available:
+            if(organ_required.type == organ_available.type and organ_required.blood_group == organ_available.blood_group):
+                if len(OrganRequired.objects.filter(pk = organ_required.pk)) > 0:
+                    receiver = organ_required.patient
+                    organ_available.receiver = receiver
+                    organ_available.is_available = False
+                    organ_available.save()
+                    notification = Notification(frm = request.user,
+                                                to = receiver.user,
+                                                name = 'Received Organ Transplant!',
+                                                text='Your request for a organ transplant of ' + str(organ_required.type) + ' has been met, please contact your home hospital')
+                    notification.save()
+                    hospital_notification = Notification(frm = request.user,
+                                                         to = receiver.donor_hospital.user,
+                                                         name = 'New Organ transplant ',
+                                                         text = 'New organ transplant pending for patient ' +
+                                                                receiver.name + ' (Ph no : ' + receiver.phone_no +
+                                                                ' )' + ' for ' + organ_required.type + '. please make necessary arrangements')
+                    hospital_notification.save()
+                    organ_required.delete()
 

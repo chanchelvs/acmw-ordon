@@ -4,4 +4,33 @@
     <br>
     <br>
     <h4 style="margin-left:10%">Welcome to ordon hospital management, start by clicking an option on side panel</h4>
+    {% if notifcount > 0 %}
+    <h4> Unread notifications</h4>
+    <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+{#        <th>Sl. No.</th>#}
+        <th>Title</th>
+        <th>Content</th>
+          <th>Notification From</th>
+          <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for notification in notifs %}
+      <tr>
+{#        <td>{{ notification.number }}</td>#}
+        <td>{{ notification.name }}</td>
+        <td>{{ notification.text }} </td>
+          <td>{{ notification.frm }}</td>
+      {% if notification.is_read  %}
+          <td></td>
+          {% else %}
+          <td><alert class="alert alert-info">New</alert></td>
+      {% endif %}
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    {% endif %}
 {%  endblock %}
