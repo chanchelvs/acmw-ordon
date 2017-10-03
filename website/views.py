@@ -157,7 +157,7 @@ def blood_details(request):
         else:
             cur_count += 1
     data = {'bloods':bloods_a}
-    print data
+    print(data)
     return render(request,"blood_details.html",data)
 
 @login_required
@@ -169,7 +169,7 @@ def organ_required(request):
     for i in range(total_organs_count):
         organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient.user.username})
     data = {'organs':organs_a}
-    print data
+    print(data)
     return render(request,"organ_details.html",data)
 
 @login_required
@@ -231,14 +231,14 @@ def list_notifications(request):
 def report_death(request):
     if request.method == 'POST':
         req = request.POST
-        print req
+        print(req)
         person = req.get('user')
         user = User.objects.get(pk = person)
         patient = Donor.objects.get(user = user)
         patient.is_alive = False
         patient.save()
         for i in organ_choices:
-            print i, req.get(i[1])
+            print(i, req.get(i[1]))
             if(req.get(i[1]) == 'on'):
                 organ = Organ(type=i[1],
                                donor=patient,
