@@ -1,0 +1,82 @@
+ {%  extends 'hospital_base.html' %}
+{% block content %}
+    <br>
+    <div align="center"> <h3 style="margin: 10px;"> Report Death</h3></div>
+    <br>
+
+ <form class="form-horizontal" method="POST">
+        {% csrf_token %}
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="user"> Select Donor or Patient to Report Death: </label>
+              <div class="col-xs-3">
+                  <select id="user" name="user" class="form-control input-md">
+                      {% for patient in patients %}
+                          <option value="{{ patient.user.pk }}">{{ patient.user.username }}</option>
+                      {% endfor %}
+                  </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Brain Death: </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="braindeath" name="braindeath" class="input-md">
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Lungs Available? : </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="Lungs" name="Lungs" class="input-md">
+                  </div>
+                </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Kidney Available? : </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="Kidney" name="Kidney" class="input-md">
+                  </div>
+                </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Heart Available? : </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="Heart" name="Heart" class="input-md">
+                  </div>
+                </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Eyes Available? : </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="Eyes" name="Eyes" class="input-md">
+                  </div>
+                </div>
+
+            <div class="form-group">
+              <div class="col-xs-3" ></div>
+               <label class="col-xs-2 control-label" for="title"> Liver Available? : </label>
+              <div class="col-xs-3">
+                  <input type="checkbox" id="Liver" name="Liver" class="input-md">
+                  </div>
+                </div>
+
+
+            <div class="form-group">
+              <div class="col-xs-4" ></div>
+               <label class="col-xs-1 control-label" >  </label>
+              <div class="col-xs-3">
+                  <button class="btn btn-success">Report</button>
+              </div>
+            </div>
+
+
+    </form>
+ {% endblock %}

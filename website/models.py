@@ -59,7 +59,7 @@ class Organ(models.Model):
     is_available = models.BooleanField(default =  True)
     organ_hospital = models.ForeignKey(Hospital, null = True, blank = True)
     def __str__(self):
-        return str(self.type) + ", " + str(self.blood_group) + ", " +  str(self.donor.user.username)
+        return str(self.type) + ", " + str(self.blood_group)
 
 
 class OrganRequired(models.Model):
@@ -91,7 +91,7 @@ class Notification(models.Model):
     is_read = models.BooleanField(default = False)
     url = models.CharField(max_length = 1000, null = True, blank = True)
     def __str__(self):
-        return str(self.title) + ", " + str(self.to)
+        return str(self.name) + ", " + str(self.to)
 
 class Fund(models.Model):
     campaign = models.ForeignKey(Campaign)

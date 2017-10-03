@@ -7,7 +7,7 @@
 <table class="table table-hover table-striped">
     <thead>
       <tr>
-        <th>Sl. No.</th>
+{#        <th>Sl. No.</th>#}
         <th>Title</th>
         <th>Content</th>
           <th>Notification From</th>
@@ -15,14 +15,16 @@
       </tr>
     </thead>
     <tbody>
-    {% for notification in notifications %}
+    {% for notification in notifs %}
       <tr>
-        <td>{{ notification.number }}</td>
+{#        <td>{{ notification.number }}</td>#}
         <td>{{ notification.name }}</td>
         <td>{{ notification.text }} </td>
           <td>{{ notification.frm }}</td>
       {% if notification.is_read  %}
-          <td>K</td>
+          <td></td>
+          {% else %}
+          <td><alert class="alert alert-info">New</alert></td>
       {% endif %}
       </tr>
     {% endfor %}

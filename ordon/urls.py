@@ -29,6 +29,8 @@ urlpatterns =[
 
     # notification stuff
     url(r'^new_notification/$', views.new_notification, name='new_notification'),
+    url(r'^list_notification/$', views.list_notifications, name='list_notifications'),
+    url(r'^report_death/$', views.report_death, name='report_deathv'),
 
 
     # admin and login urls

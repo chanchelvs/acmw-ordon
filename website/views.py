@@ -211,6 +211,39 @@ def new_notification(request):
     data = {'patients':donors}
     return render(request,"new_notification.html",data)
 
+@login_required
+def list_notifications(request):
+    notifs = Notification.objects.filter(to = request.user)
+    data = {'notifs':notifs}
+    for notif in notifs:
+        notif.is_read = True
+        notif.save()
+    return render(request,"list_notifications.html",data)
+
+
+@login_required
+def report_death(request):
+    if request.method == 'POST':
+        req = request.POST
+        print req
+        person = req.get('user')
+        user = User.objects.get(pk = person)
+        patient = Donor.objects.get(user = user)
+        patient.is_alive = False
+        patient.save()
+        for i in organ_choices:
+            print i, req.get(i[1])
+            if(req.get(i[1]) == 'on'):
+                organ = Organ(type=i[1],
+                               donor=patient,
+                               blood_group=patient.blood_group,
+                               organ_hospital=patient.donor_hospital)
+                organ.save()
+
+    donors = Donor.objects.filter(donor_hospital__user=request.user,is_alive=True)
+    data = {'patients': donors}
+    return render(request,"report_death.html",data)
+
 def donor_registration(request):
     if(request.method=='POST'):
         username = (request.POST.get('username'))
@@ -244,4 +277,9 @@ def donor_registration(request):
             return render(request,'donor_reg.html',{'message':'Passwords does not match'}) 
     else:
         return render(request,'donor_reg.html')
+
+
+def give_notification(request):
+    organs_available = Organ.objects.exclude(type='Blood').order_by('type')
+    organs_required = OrganRequired.objects.exclude(type='Blood').order_by('type')
 
