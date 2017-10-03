@@ -68,7 +68,7 @@ class OrganRequired(models.Model):
     blood_group = models.CharField(max_length = 20, choices = blood_group_choices)
     organ_hospital = models.ForeignKey(Hospital, null = True, blank = True)
     def __str__(self):
-        return str(self.type) + ", " + str(self.blood_group) + ", " +  str(self.donor.user.username)
+        return str(self.type) + ", " + str(self.blood_group)
 
 class Campaign(models.Model):
     posted_by = models.ForeignKey(Donor)

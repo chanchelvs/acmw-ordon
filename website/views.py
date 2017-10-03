@@ -168,7 +168,7 @@ def organ_required(request):
     cur_count = 0
     for i in range(total_organs_count):
         organs_a.append({"type":organs[i].type,"blood_group":organs[i].blood_group,"patient":organs[i].patient.user.username})
-    data = {'organs':organs_a}
+    data = {'organs':organs}
     print(data)
     return render(request,"organ_details.html",data)
 
@@ -271,15 +271,21 @@ def donor_registration(request):
                 user = User.objects.create_user(username, email, password1)
             user = User.objects.get(username=username)
             handle_uploaded_file(photo,username+'_.jpg')
+            hospital = None
+            try:
+                hospital = Hospital.objects.get(user=request.user)
+            except:
+                pass
             donor = Donor(user = user,
                           name=name,
                           phone_no=phone,
                           blood_group=blood_group,
                           dob = dob,
                           aadhar_no = aadhar_no,
+                          donor_hospital=hospital,
                           photo=username+'_.jpg')
             donor.save()
-            return redirect('/login/')
+            return redirect('/home/')
         else:
             return render(request,'donor_reg.html',{'message':'Passwords does not match'}) 
     else:
