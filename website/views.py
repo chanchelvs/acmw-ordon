@@ -251,7 +251,6 @@ def report_death(request):
     data = {'patients': donors}
     return render(request,"report_death.html",data)
 
-@login_required
 def donor_registration(request):
     if(request.method=='POST'):
         username = (request.POST.get('username'))
@@ -280,7 +279,7 @@ def donor_registration(request):
                           aadhar_no = aadhar_no,
                           photo=username+'_.jpg')
             donor.save()
-            return redirect('/list_donors/')
+            return redirect('/login/')
         else:
             return render(request,'donor_reg.html',{'message':'Passwords does not match'}) 
     else:
